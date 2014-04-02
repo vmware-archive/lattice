@@ -33,7 +33,7 @@ angular.module("eventSrvc", ['appConfigSrvc', 'appUtilSrvc', 'errorReportingSrvc
         $scope.fetchGrains(mid) if AppPref.get('fetchGrains', false)
         return minion
       processWheelEvent: (jid, kind, edata) ->
-        job = jobs.get(jid)
+        job = AppData.getJobs().get(jid)
         job.processEvent(edata)
         data = edata.data
         if kind == 'new'
@@ -42,7 +42,7 @@ angular.module("eventSrvc", ['appConfigSrvc', 'appUtilSrvc', 'errorReportingSrvc
           job.processRetEvent(data)
         return job
       processRunEvent: ($scope, jid, kind, edata) ->
-        job = jobs.get(jid)
+        job = AppData.getJobs().get(jid)
         job.processEvent(edata)
         data = edata.data
         if kind == 'new'
@@ -53,7 +53,7 @@ angular.module("eventSrvc", ['appConfigSrvc', 'appUtilSrvc', 'errorReportingSrvc
           job.processRetEvent(data)
         return job
       processJobEvent: (jid, kind, edata) ->
-        job = jobs.get(jid)
+        job = AppData.getJobs().get(jid)
         job.processEvent(edata)
         data = edata.data
         if kind == 'new'

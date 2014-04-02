@@ -23,22 +23,6 @@ mainApp.controller 'ConsoleCtlr', ['$scope', '$location', '$route', '$q', '$filt
         $scope.commanding = false
         $scope.docSearch = false
 
-        if !AppData.get('commands')?
-            AppData.set('commands', new Itemizer())
-        $scope.commands = AppData.get('commands')
-
-        if !AppData.get('jobs')?
-            AppData.set('jobs', new Itemizer())
-        $scope.jobs = AppData.get('jobs')
-
-        if !AppData.get('minions')?
-            AppData.set('minions', new Itemizer())
-        $scope.minions = AppData.get('minions')
-
-        if !AppData.get('events')?
-            AppData.set('events', new Itemizer())
-        $scope.events = AppData.get('events')
-
         $scope.newPagerage = (itemCount) ->
             return (new Pagerage(itemCount))
 
@@ -395,8 +379,8 @@ mainApp.controller 'ConsoleCtlr', ['$scope', '$location', '$route', '$q', '$filt
                   cmd =
                     fun: val.Function
                   cmd.tgt = val.Target if val.Target?
-                  if not $scope.jobs.get(jid)
-                    $scope.jobs.set(jid, new Runner(jid, cmd))
+                  if not $scope.getJobs().get(jid)
+                    $scope.getJobs().set(jid, new Runner(jid, cmd))
                     $scope.cachedJIDs.push(jid)
                 $scope.$emit("CacheFetch")
               , () ->
@@ -429,14 +413,14 @@ mainApp.controller 'ConsoleCtlr', ['$scope', '$location', '$route', '$q', '$filt
               result.done = true
               result.success = true
               result.fail = false
-            $scope.jobs.get($scope.tagMap[data.jid])?.results = results
+            $scope.getJobs().get($scope.tagMap[data.jid])?.results = results
           if data.success
-            $scope.jobs.get($scope.tagMap[data.jid])?.done = true
-            $scope.jobs.get($scope.tagMap[data.jid])?.fail = false
+            $scope.getJobs().get($scope.tagMap[data.jid])?.done = true
+            $scope.getJobs().get($scope.tagMap[data.jid])?.fail = false
             $scope.$emit("CacheFetch", {succes: true, jid: $scope.tagMap[data.jid]})
           if not data.success
-            $scope.jobs.get($scope.tagMap[data.jid])?.done = false
-            $scope.jobs.get($scope.tagMap[data.jid])?.fail = true
+            $scope.getJobs().get($scope.tagMap[data.jid])?.done = false
+            $scope.getJobs().get($scope.tagMap[data.jid])?.fail = true
             $scope.$emit("CacheFetch", {succes: false, jid: $scope.tagMap[data.jid]})
 
         $scope.testClick = (name) ->
