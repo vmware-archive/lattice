@@ -24,8 +24,15 @@ angular.module("appDataSrvc", ['appConfigSrvc', "appUtilSrvc"]).factory "AppData
     base = Configuration.baseUrl
 
     servicer =
+      JOBS: 'jobs'
+
+      MINIONS: 'minions'
+
       getJobs: () ->
-        return @get('jobs')
+        return @get(@JOBS)
+
+      getMinions: () ->
+        return @get(@MINIONS)
 
       getAll: () ->
         return appData
@@ -56,10 +63,16 @@ angular.module("appDataSrvc", ['appConfigSrvc', "appUtilSrvc"]).factory "AppData
 
       clearSaltData: () ->
         @set('commands', new Itemizer())
-        @set('jobs', new Itemizer())
-        @set('minions', new Itemizer())
+        @set(@JOBS, new Itemizer())
+        @set(@MINIONS, new Itemizer())
         @set('events', new Itemizer())
         return
+
+      initSaltData: () ->
+        @set('commands', new Itemizer()) if not @get('commands')
+        @set(@JOBS, new Itemizer()) if not @get(@JOBS)
+        @set(@MINIONS, new Itemizer()) if not @get(@MINIONS)
+        @set('commands', new Itemizer()) if not @get('commands')
 
     return servicer
   ]
