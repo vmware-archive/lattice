@@ -447,7 +447,7 @@
 <div class="row"  ng-show="monitorMode == 'minion'">
   <div class="col-md-12 box flat-top wide">
     <p ng-if="graining"><i class="fa-icon-spinner fa-icon-spin displayed-in-center"></i></p>
-    <div ng-if="!graining" class="box box-no-border" ng-repeat="minion in minions.values() | filter:filterage.express | pagerize:minionPager">
+    <div ng-if="!graining" class="box box-no-border" ng-repeat="minion in getMinions().values() | filter:filterage.express | pagerize:minionPager">
       <span class="pull-right" ng-show="minion.highstateStatus.dirty"><i class="fa-icon-flag"></i></span>
       <div class="pull-left">
         <span class="badge" title="Latest active status: Green=up, Red=down"

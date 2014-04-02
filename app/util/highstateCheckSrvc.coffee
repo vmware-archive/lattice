@@ -12,14 +12,6 @@ This service is intended to be called from a controller.
 angular.module("highstateCheckSrvc", ['appConfigSrvc', 'appUtilSrvc', 'saltApiSrvc', 'appPrefSrvc', 'jobSrvc', 'errorReportingSrvc']).factory "HighstateCheck",
   ['ErrorReporter', 'AppData', 'Itemizer', 'SaltApiSrvc', 'AppPref', '$q', 'JobDelegate', (ErrorReporter, AppData, Itemizer, SaltApiSrvc, AppPref, $q, JobDelegate) ->
 
-    if !AppData.get('minions')?
-      AppData.set('minions', new Itemizer())
-    minions = AppData.get('minions')
-
-    if !AppData.get('jobs')?
-      AppData.set('jobs', new Itemizer())
-    jobs = AppData.get('jobs')
-
 
     class HighStateStatus
       constructor: (@dirty = false, @messages = []) ->
@@ -28,7 +20,7 @@ angular.module("highstateCheckSrvc", ['appConfigSrvc', 'appUtilSrvc', 'saltApiSr
 
     servicer =
       clearOldHighstateStatuses: () ->
-        minion.highstateStatus = new HighStateStatus() for minion in minions.values()
+        minion.highstateStatus = new HighStateStatus() for minion in AppData.getMinions().values()
         return
       highstateDirtyComments: (stateData) ->
         retVal = []
@@ -45,7 +37,7 @@ angular.module("highstateCheckSrvc", ['appConfigSrvc', 'appUtilSrvc', 'saltApiSr
           result = @highstateDirtyComments val.return
           if result.length > 0
             # Assign dirty status to minion
-            minions.get(key)?.highstateStatus = new HighStateStatus(true, result)
+            AppData.getMinions().get(key)?.highstateStatus = new HighStateStatus(true, result)
         return
       isHighstateCheckEnabled: () ->
         highStateCheck = AppPref.get('highStateCheck')
@@ -58,7 +50,7 @@ angular.module("highstateCheckSrvc", ['appConfigSrvc', 'appUtilSrvc', 'saltApiSr
       makeHighStateCall: ($scope) ->
         isCheckingHighstateConsistency = true
         # Call highstate with test=True
-        tgt = minions.keys().join(',')
+        tgt = AppData.getMinions().keys().join(',')
 
         cmd =
           fun: 'state.highstate'

@@ -4,14 +4,6 @@ Service to handle event processing.
 angular.module("eventSrvc", ['appConfigSrvc', 'appUtilSrvc', 'errorReportingSrvc', 'appPrefSrvc', 'jobSrvc']).factory "EventDelegate",
   ['AppData', 'Itemizer', 'AppPref', '$q', 'ErrorReporter', 'JobDelegate', (AppData, Itemizer, AppPref, $q, ErrorReporter, JobDelegate) ->
 
-    if !AppData.get('minions')?
-      AppData.set('minions', new Itemizer())
-    minions = AppData.get('minions')
-
-    if !AppData.get('jobs')?
-      AppData.set('jobs', new Itemizer())
-    jobs = AppData.get('jobs')
-
     if !AppData.get('events')?
       AppData.set('events', new Itemizer())
     events = AppData.get('events')
@@ -24,7 +16,7 @@ angular.module("eventSrvc", ['appConfigSrvc', 'appUtilSrvc', 'errorReportingSrvc
         if data.result is true
           if data.act is 'delete'
             minion.unlinkJobs()
-            minions.del(mid)
+            AppData.getMinions().del(mid)
         return minion
       processMinionEvent: ($scope, mid, edata) ->
         minion = JobDelegate.snagMinion(mid)
