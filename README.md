@@ -6,7 +6,7 @@ SaltStack Common UI code
 What is Lattice
 ---------------
 
-Lattice is Saltstack GUI common repo. Javascript code to present interface to salt and HTML / CSS to bootstrap an app is included in Lattice. Javascript components provide an interface to Salt and store the data model that we will be presenting to the user. Information such as Jobs, Events, Minions, Commands and Docs is fetched by this framework and consumed by the front end.
+Lattice is Saltstack GUI common repo. Lattice includes Javascript code to present interface to salt and HTML / CSS to bootstrap an app. Javascript components provide an interface to Salt and store the data model. Information such as Jobs, Events, Minions, Commands for example. This data model can be consumed by a front end.
 
 
 Contrubutions
