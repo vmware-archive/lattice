@@ -14,9 +14,8 @@ mainApp.controller 'BaseController', ['$scope', '$location', '$route', '$q', '$f
           AppData.set('commands', new Itemizer())
       $scope.commands = AppData.get('commands')
 
-      if !AppData.get('jobs')?
-          AppData.set('jobs', new Itemizer())
-      $scope.jobs = AppData.get('jobs')
+      $scope.getJobs = () ->
+        return AppData.getJobs()
 
       if !AppData.get('minions')?
           AppData.set('minions', new Itemizer())
@@ -150,7 +149,7 @@ mainApp.controller 'BaseController', ['$scope', '$location', '$route', '$q', '$f
                 console.log "Error Opening Event Stream"
                 #console.log data
                 if SessionStore.get('loggedIn') == false
-                  ErrorReporter.addAlert("danger", "Cannot open enevt stream! Please login!")
+                  ErrorReporter.addAlert("danger", "Cannot open event stream! Please login!")
                 else
                   ErrorReporter.addAlert("danger", "Cannot open event stream!")
                 $scope.eventing = false
@@ -163,14 +162,7 @@ mainApp.controller 'BaseController', ['$scope', '$location', '$route', '$q', '$f
           return true
 
       $scope.clearSaltData = () ->
-          AppData.set('commands', new Itemizer())
-          $scope.commands = AppData.get('commands')
-          AppData.set('jobs', new Itemizer())
-          $scope.jobs = AppData.get('jobs')
-          AppData.set('minions', new Itemizer())
-          $scope.minions = AppData.get('minions')
-          AppData.set('events', new Itemizer())
-          $scope.events = AppData.get('events')
+        AppData.clearSaltData()
 
       $scope.authListener = (event, loggedIn) ->
           #console.log "Received #{event.name}"
