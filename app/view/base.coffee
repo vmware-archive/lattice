@@ -23,9 +23,8 @@ mainApp.controller 'BaseController', ['$scope', '$location', '$route', '$q', '$f
       $scope.getMinions = () ->
         return AppData.getMinions()
 
-      if !AppData.get('events')?
-          AppData.set('events', new Itemizer())
-      $scope.events = AppData.get('events')
+      $scope.getEvents = () ->
+        return AppData.getEvents()
 
       $scope.alerts = () ->
         return ErrorReporter.getAlerts()
