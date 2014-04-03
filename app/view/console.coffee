@@ -495,12 +495,12 @@ mainApp.controller 'ConsoleCtlr', ['$scope', '$location', '$route', '$q', '$filt
             return {required: required, defaults: defaults, defaults_vals: defaults_vals}
 
         $scope.argSpec = () ->
-          return unless $scope.minions?.keys()?.length > 0
+          return unless $scope.getMinions()?.keys()?.length > 0
           cmd =
             module: $scope.command.cmd.fun
             client: 'minion'
             mode: 'sync'
-            tgt: $scope.minions.keys()[0]
+            tgt: $scope.getMinions().keys()[0]
 
           SaltApiSrvc.signature($scope, cmd)
           .success (data, status, headers, config) ->

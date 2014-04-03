@@ -7,10 +7,6 @@ angular.module("jobSrvc", ['appUtilSrvc']).factory "JobDelegate",
   ['AppData', 'Itemizer', 'Wheeler', 'Jobber', 'Minioner', 'Runner',
   (AppData, Itemizer, Wheeler, Jobber, Minioner, Runner) ->
 
-    if !AppData.get('minions')?
-      AppData.set('minions', new Itemizer())
-    minions = AppData.get('minions')
-
     if !AppData.get('events')?
       AppData.set('events', new Itemizer())
     events = AppData.get('events')
@@ -48,9 +44,9 @@ angular.module("jobSrvc", ['appUtilSrvc']).factory "JobDelegate",
           AppData.getJobs().set(jid, job)
         return (AppData.getJobs().get(jid))
       snagMinion: (mid) -> # get or create Minion
-        if not minions.get(mid)?
-          minions.set(mid, new Minioner(mid))
-        return (minions.get(mid))
+        if not AppData.getMinions().get(mid)?
+          AppData.getMinions().set(mid, new Minioner(mid))
+        return (AppData.getMinions().get(mid))
       snagJob: (jid, cmd) -> #get or create Jobber
         if not AppData.getJobs().get(jid)?
           job = new Jobber(jid, cmd)

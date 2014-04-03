@@ -14,12 +14,14 @@ mainApp.controller 'BaseController', ['$scope', '$location', '$route', '$q', '$f
           AppData.set('commands', new Itemizer())
       $scope.commands = AppData.get('commands')
 
+      $scope.getAppData = () ->
+        AppData
+
       $scope.getJobs = () ->
         return AppData.getJobs()
 
-      if !AppData.get('minions')?
-          AppData.set('minions', new Itemizer())
-      $scope.minions = AppData.get('minions')
+      $scope.getMinions = () ->
+        return AppData.getMinions()
 
       if !AppData.get('events')?
           AppData.set('events', new Itemizer())
@@ -45,7 +47,7 @@ mainApp.controller 'BaseController', ['$scope', '$location', '$route', '$q', '$f
               expr_form: 'glob'
 
           if not target?
-              minions = (minion.id for minion in $scope.minions.values() when minion.active is true)
+              minions = (minion.id for minion in $scope.getMinions().values() when minion.active is true)
               target = minions.join(',')
               cmd.tgt = target
               cmd.expr_form = 'list'
@@ -107,7 +109,7 @@ mainApp.controller 'BaseController', ['$scope', '$location', '$route', '$q', '$f
           return true
 
       $scope.setActives = (activeMinions) ->
-        inactiveMinions = _.difference($scope.minions.keys(), activeMinions)
+        inactiveMinions = _.difference($scope.getMinions().keys(), activeMinions)
         for mid in activeMinions
           minion = JobDelegate.snagMinion(mid)
           minion.activize()
@@ -245,11 +247,11 @@ mainApp.controller 'BaseController', ['$scope', '$location', '$route', '$q', '$f
             ErrorReporter.addAlert("warning", "Failed to fetch docs. Please check system and retry")
 
         $scope.fetchDocs = () ->
-            return unless $scope.minions?.keys()?.length > 0
+            return unless $scope.getMinions()?.keys()?.length > 0
             command =
                 fun: 'sys.doc'
                 mode: 'async'
-                tgt: $scope.minions.keys()[0]
+                tgt: $scope.getMinions().keys()[0]
                 expr_form: 'glob'
 
             # command = $scope.snagCommand($scope.humanize(commands), commands)
