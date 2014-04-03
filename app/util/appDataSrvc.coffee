@@ -24,6 +24,7 @@ angular.module("appDataSrvc", ['appConfigSrvc', "appUtilSrvc"]).factory "AppData
     base = Configuration.baseUrl
     JOBS = 'jobs'
     MINIONS = 'minions'
+    EVENTS = 'events'
 
     servicer =
       getJobs: () ->
@@ -31,6 +32,9 @@ angular.module("appDataSrvc", ['appConfigSrvc', "appUtilSrvc"]).factory "AppData
 
       getMinions: () ->
         return @get(MINIONS)
+
+      getEvents: () ->
+        return @get(EVENTS)
 
       getAll: () ->
         return appData
@@ -63,7 +67,7 @@ angular.module("appDataSrvc", ['appConfigSrvc', "appUtilSrvc"]).factory "AppData
         @set('commands', new Itemizer())
         @set(JOBS, new Itemizer())
         @set(MINIONS, new Itemizer())
-        @set('events', new Itemizer())
+        @set(EVENTS, new Itemizer())
         return
 
     return servicer

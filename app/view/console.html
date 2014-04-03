@@ -560,7 +560,7 @@
 
 <div class="row" ng-show="monitorMode == 'event'">
   <div class="col-md-12 box flat-top wide" >
-    <div class="box box-no-border" ng-repeat="event in events.values().reverse() | pagerize:eventPager">
+    <div class="box box-no-border" ng-repeat="event in getEvents().values().reverse() | pagerize:eventPager">
       <div>
         <span class="nook">{{event.data.stamp}}</span>&nbsp;
         <span class="nook" title="Event Tag">{{event.tag}}</span>&nbsp;
