@@ -59,6 +59,9 @@ mainApp.controller 'BaseController', ['$scope', '$location', '$route', '$q', '$f
               result = data.return?[0]
               if result
                   job = JobDelegate.startJob(result, cmd)
+                  if job.done
+                    $scope.assignGrains(job)
+                    return #early return
                   job.commit($q).then (donejob) ->
                       $scope.assignGrains(donejob)
                       $scope.graining = false if noAjax
