@@ -3,6 +3,8 @@ Lattice
 
 SaltStack Common UI code
 
+**Note:** This repository has been archived. It is read-only. See [Archiving repositories](https://github.com/blog/2460-archiving-repositories) for more information.
+
 What is Lattice
 ---------------
 
